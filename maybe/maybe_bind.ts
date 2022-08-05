@@ -1,3 +1,4 @@
+import type { Predicate } from "../types.d.ts";
 import * as Maybe from "./maybe.ts";
 
 export type { Some, None, Maybe } from "./maybe.ts";
@@ -42,7 +43,7 @@ export function orElse<A, B>(this: Maybe.Maybe<A>, onNone: () => B): A | B {
 }
 export function filter<A>(
   this: Maybe.Maybe<A>,
-  predicate: Maybe.Predicate<Maybe.Some<A>>
+  predicate: Predicate<Maybe.Some<A>>
 ): Maybe.Maybe<A> {
   return Maybe.filter(this, predicate);
 }
