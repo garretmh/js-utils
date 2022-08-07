@@ -1,9 +1,8 @@
 import type { Predicate, Refinement } from "../types.d.ts";
 
-// deno-lint-ignore ban-types
-export type Some<T extends {} = {}> = T;
+export type Some<T> = T extends null | undefined ? never : T;
 export type None = null | undefined;
-export type Maybe<T> = Some<T> | None;
+export type Maybe<T> = T | None;
 
 export const none: None = undefined;
 
@@ -58,7 +57,7 @@ export function orElse<A, B>(a: Maybe<A>, onNone: () => B): A | B {
 
 export function filter<A, B extends A>(
   a: Maybe<A>,
-  predicate: Refinement<Some<A>, B>
+  predicate: Refinement<Some<A>, Some<B>>
 ): Maybe<B>;
 export function filter<A>(a: Maybe<A>, predicate: Predicate<Some<A>>): Maybe<A>;
 export function filter<A>(
@@ -90,7 +89,7 @@ export function allValues<T extends Record<PropertyKey, unknown>>(
 
 // Helper Types.
 
-type SomeOrNone<T> = Some<T> extends never ? None : Some<T>;
+type SomeOrNone<T> = NonNullable<T> extends never ? undefined : NonNullable<T>;
 
 type NoNullishArray<T extends readonly unknown[] | []> =
   T[number] extends NonNullable<T[number]> ? T : never;
