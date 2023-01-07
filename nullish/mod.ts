@@ -86,6 +86,22 @@ export function* iterate<A>(
   if (isNonNullable(maybe)) yield maybe;
 }
 
+// TODO: Use once Iterator Helpers is available
+// SEE: https://github.com/tc39/proposal-iterator-helpers
+//
+// export function all<T extends readonly unknown[] | []>(
+//   values: T | Nullish,
+// ): NonNullableArray<T> | undefined;
+// export function all<T>(
+//   values: Iterable<T | Nullish>,
+// ): Iterable<NonNullable<T>> | undefined;
+// export function all<T>(
+//   values: Iterable<T | Nullish>,
+// ): Iterable<NonNullable<T>> | undefined {
+//   return isNonNullable(values) && Iterator.every(values, isNonNullable)
+//     ? values
+//     : undefined;
+// }
 export function all<T extends readonly unknown[] | []>(
   values: T | Nullish,
 ): NonNullableArray<T> | undefined {
